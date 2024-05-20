@@ -10,7 +10,7 @@ const INMUTABLE_CACHE = 'inmutable-v1';
 // Lo que tiene que estar cargado de manera instantánea
 // o lo que debería de estar cargado lo antes posible
 const APP_SHELL = [
-    '/',
+    //'/',
     'index.html', // Se pone el .html
     'css/style.css',
     'img/favicon.ico',

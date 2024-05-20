@@ -1,8 +1,15 @@
+var url = window.location.href;
+var swLocation = '/twittor.github.io/sw.js';
+
 
 // carga de Navigator Service Workert
 
 if ( navigator.serviceWorker ){
-    navigator.serviceWorker.register('/sw.js');
+
+    if( url.includes('locaslhost')){
+        swLocation = '/sw.js';
+    }
+    navigator.serviceWorker.register(swLocation);
 }
 
 // Referencias de jQuery
