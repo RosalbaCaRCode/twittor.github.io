@@ -3,7 +3,7 @@ importScripts('js/sw-utils.js');
 
 // Arreglo para definir constantes de caché
 const STATIC_CACHE = 'static-v1';
-const DYNAMIC_CACHE = 'dynamic-v1';
+const DYNAMIC_CACHE = 'dynamic-v2';
 const INMUTABLE_CACHE = 'inmutable-v1';
 
 // Arreglo App Shell, tiene todo lo necesario para mi aplicación
@@ -50,27 +50,25 @@ self.addEventListener('install', e => {
 // Proceso para que se borren los cachés anteriores de un sw
 // Que ya no van a servir
 self.addEventListener('activate', e => {
-    // Obtiene todas las claves (nombres) de los cachés almacenados
-    const respuesta = caches.keys().then(keys => {
-        // Itera sobre cada clave del caché
-        return Promise.all(
-            keys.map(key => {
-                // Si la clave no es igual al nombre del caché estático actual y contiene la palabra 'static', elimina ese caché
-                if (key !== STATIC_CACHE && key.includes('static')) {
-                    return caches.delete(key);
-                }
-
-                 // Si la clave no es igual al nombre del caché inmutable actual y contiene la palabra 'static', elimina ese caché
-
-                if (key !== INMUTABLE_CACHE && key.includes('inmutable')) {
-                    return caches.delete(key);
-                }
-            })
-        );
+ 
+    const respuesta = caches.keys().then( keys => {
+ 
+        keys.forEach( key => {
+ 
+            if (  key !== STATIC_CACHE && key.includes('static') ) {
+                return caches.delete(key);
+            }
+ 
+            if (  key !== DYNAMIC_CACHE && key.includes('dynamic') ) {
+                return caches.delete(key);
+            }
+ 
+        });
+ 
     });
-
-    // Espera hasta que todas las promesas de eliminación de caché se completen antes de finalizar la activación
-    e.waitUntil(respuesta);
+ 
+    e.waitUntil( respuesta );
+ 
 });
 
 
